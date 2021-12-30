@@ -7,7 +7,7 @@ import facebookIcon from '../images/facebook.png'
 export const Footer = () => (
   <footer>
     <p className="copyright">
-      &copy; {new Date().getFullYear()} Todoapp-Powered by Prismic
+      &copy; {new Date().getFullYear()} Todoapp-Powered by Prismic!
     </p>
     <div className="social">
       <img src={facebookIcon} alt="Facebook social icon" />
