@@ -1,16 +1,10 @@
 const path = require('path')
 
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 
-dotenv.config({path: `.env.${process.env.NODE_ENV || 'development'}`,})
-
-// require('dotenv').config({
-//   path: `.env.${process.env.NODE_ENV || 'development'}`,
-// })
-
-// const prismicConfig = require('./prismic-configuration')
-const linkResolverCustom = require('./src/utils/linkResolver')
-
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV || 'development'}`,
+})
 
 module.exports = {
   siteMetadata: {
@@ -25,7 +19,7 @@ module.exports = {
         accessToken: process.env.PRISMIC_ACCESS_TOKEN,
         customTypesApiToken: process.env.PRISMIC_CUSTOM_TYPES_API_TOKEN,
         linkResolver: require('./src/utils/linkResolver').linkResolver,
-        // if you delete one of the Custom Types of your schema you need to declare it as an empty object (my_deleted_schema: {}) in the plugin options. 
+        // if you delete one of the Custom Types of your schema you need to declare it as an empty object (my_deleted_schema: {}) in the plugin options.
         // Even when using the customTypesApiToken option:
         // see: https://prismic.io/docs/technologies/install-the-plugin-gatsby#auto-setup
         schemas: {
