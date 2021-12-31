@@ -1,22 +1,33 @@
 const path = require('path')
+
 const dotenv = require('dotenv')
 
-dotenv.config()
+dotenv.config({path: `.env.${process.env.NODE_ENV || 'development'}`,})
 
-const prismicConfig = require('./prismic-configuration')
+// require('dotenv').config({
+//   path: `.env.${process.env.NODE_ENV || 'development'}`,
+// })
+
+// const prismicConfig = require('./prismic-configuration')
+const linkResolverCustom = require('./src/utils/linkResolver')
+
 
 module.exports = {
   siteMetadata: {
-    title: 'Multi-language site',
-    description: 'Sample multi-language website with Prismic CMS & Gatsby.js',
+    title: 'Podcast',
+    description: 'Sample Podcast Site',
   },
   plugins: [
     {
       resolve: 'gatsby-source-prismic',
       options: {
-        repositoryName: prismicConfig.prismicRepo,
+        repositoryName: process.env.GATSBY_PRISMIC_REPO_NAME,
         accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+        customTypesApiToken: process.env.PRISMIC_CUSTOM_TYPES_API_TOKEN,
         linkResolver: require('./src/utils/linkResolver').linkResolver,
+        // if you delete one of the Custom Types of your schema you need to declare it as an empty object (my_deleted_schema: {}) in the plugin options. 
+        // Even when using the customTypesApiToken option:
+        // see: https://prismic.io/docs/technologies/install-the-plugin-gatsby#auto-setup
         schemas: {
           homepage: require('./custom_types/homepage.json'),
           page: require('./custom_types/page.json'),
@@ -27,7 +38,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-prismic-previews',
       options: {
-        repositoryName: prismicConfig.prismicRepo,
+        repositoryName: process.env.GATSBY_PRISMIC_REPO_NAME,
         accessToken: process.env.PRISMIC_ACCESS_TOKEN,
       },
     },
